@@ -1,0 +1,29 @@
+<html>
+ <head>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+   
+ <meta charset="UTF-8">
+ <title>HTML5サンプル</title>
+</head>
+ <body>
+ 
+ <div class="modal-btn js-modal-open">save</div>
+  <div class="js-modal">
+    <div class="modal-bg js-modal-close"></div>
+    <div class="modal-wrap">
+      <span class="js-modal-close modal-close-btn"><i class="fas fa-times-circle"></i></span>
+      <div class="modal-contents">
+        <%= form_with model:@position method: :get,class="",local :true do|f|%>
+        
+        <%= f.text_field :posx, id: "position_x" %>
+        <%= f.text_field :posy, id: "position_y" %>
+
+        <%= f.submit %>
+
+        <div class="modal-btn js-modal-close">閉じる</div>
+      </div>
+    </div>
+  </div>
+ </body>
+</html>

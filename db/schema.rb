@@ -10,53 +10,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_01_084315) do
+ActiveRecord::Schema.define(version: 2021_03_12_095313) do
 
-  create_table "constparams", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.integer "lv", null: false
-    t.integer "attack", null: false
-    t.integer "defence", null: false
-    t.integer "spd", null: false
+  create_table "positions", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.integer "posx", null: false
+    t.integer "posy", null: false
+    t.bigint "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-  end
-
-  create_table "infos", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.integer "eventphase", null: false
-    t.integer "positionx", null: false
-    t.integer "positiony", null: false
-  end
-
-  create_table "items", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.string "item"
-    t.bigint "players_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["players_id"], name: "index_items_on_players_id"
-  end
-
-  create_table "players", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.string "name", null: false
-    t.string "race", null: false
-    t.integer "gold", null: false
-    t.bigint "users_id", null: false
-    t.bigint "statuses_id", null: false
-    t.bigint "constparams_id", null: false
-    t.bigint "infos_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["constparams_id"], name: "index_players_on_constparams_id"
-    t.index ["infos_id"], name: "index_players_on_infos_id"
-    t.index ["statuses_id"], name: "index_players_on_statuses_id"
-    t.index ["users_id"], name: "index_players_on_users_id"
-  end
-
-  create_table "statuses", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.integer "hp", null: false
-    t.integer "mp", null: false
-    t.integer "exp", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_positions_on_user_id"
   end
 
   create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -72,8 +34,5 @@ ActiveRecord::Schema.define(version: 2021_03_01_084315) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  add_foreign_key "items", "players", column: "players_id"
-  add_foreign_key "players", "constparams", column: "constparams_id"
-  add_foreign_key "players", "infos", column: "infos_id"
-  add_foreign_key "players", "users", column: "users_id"
+  add_foreign_key "positions", "users"
 end

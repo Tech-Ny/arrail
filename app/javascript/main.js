@@ -57,6 +57,15 @@ function BattleCommand(){
 	Escape.innerHTML = "にげる";
 }
 
+function Items(){
+	
+}
+/*
+function MagicCommand(){
+
+}
+*/
+
 //呼び出されたコマンドに対して、視覚的な選択をさせる矢印の描画
 function activeMenu(id){
 	if (BattleCursor == id) {
@@ -101,6 +110,46 @@ function PlayerBattleManager(BattleCursor){
 		default:
 		break;
 	}
+}
+
+function magicselection(){
+	switch(MagicCursor){
+		case 1:
+
+	  break;
+
+		case 2:
+
+		break;
+
+		case 3:
+
+		break;
+
+		case 4:
+
+	  break;
+
+		case 5:
+
+		break;
+
+		case 6:
+
+		break;
+
+		case 7:
+
+		break;
+
+		case 8:
+
+		break;
+
+		default:
+		break;
+
+}
 }
 
 //物理攻撃時
