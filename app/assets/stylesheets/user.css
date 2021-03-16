@@ -123,7 +123,7 @@ a:link, a:visited, a:hover, a:active {
 }
 
 body{
-  background-color: grey;
+  background-color:black;
   animation: fadeIn 1s ease 0s 1 normal;
   	-webkit-animation: fadeIn 1s ease 0s 1 normal;
 }

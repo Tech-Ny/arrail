@@ -1,39 +1,33 @@
 class PlayersController < ApplicationController
+  before_action :player_params, only: [:new,:edit]
 
   def index
-    #@player = Player.find(params[user_id])
-    #gon.name = @player.name
-    #gon.race = @player.race
-    #gon.gold = @player.gold
+    @players = Player.all
+  end
 
-    #@constparam = Constparams.find(params[player_id])
-    #gon.lv = @constparam.lv
-    #gon.attack = @constparam.attack
-    #gon.defence = @constparam.defence
-    #gon.spd = @constparam.spd
+  def new
 
-    #@info = Info.find(params[player_id])
-    #gon.eventphase = @info.eventphase
-    #gon.posx = @info.positionx
-    #gon.posy = @info.positiony
+    @player = Player.new(player_params)
+    if @player.save
+      redirect_to players_path
+    else 
+      render index
+    end
 
-    #@status = Status.find(params[player_id])
-    #gon.hp = @status.hp
-    #gon.mp = @status.mp
-    #gon.exp = @status.exp
+  end
 
-    #@item = item.find(params[player_id])
-    #gon.item = @item.item
-    
-    @position = Position.create
-
-    #gon.current_user_id = current_user.id
+  def create
+    @player = Player.create(player_params)
+    redirect_to players_path
   end
 
   private
-
   def player_params
-    params.require(:player).permit(:name,:race,:gold).merge(token: params[:token])
+    params.permit(:players).permit(:posx,:posy,user_id:current_user.id)
   end
+
+  #def player_set
+  #  @player = Player.find(user_id.current_user.id)
+  #end
 
 end

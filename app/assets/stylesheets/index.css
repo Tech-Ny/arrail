@@ -124,3 +124,38 @@ span.message {
   transform: translate(-50%, -50%);
   background: #fff;
 }
+
+.update_notification{
+  background-color: black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width:50vw;
+  margin: 300px auto;
+  font-size: 20px;
+  height: 120px;/*スクロールの高さ*/
+	overflow-y: scroll;
+  color: white;
+  border:3px solid white;
+  border-radius:6px;
+}
+
+.update_header{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+
+  font-size: 40px;
+
+}
+
+.small_header{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+
+  font-size: 20px;
+}

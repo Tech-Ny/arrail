@@ -14,12 +14,13 @@
     <div class="modal-wrap">
       <span class="js-modal-close modal-close-btn"><i class="fas fa-times-circle"></i></span>
       <div class="modal-contents">
-        <%= form_with model:@position method: :get,class="",local :true do|f|%>
+        <%= form_with model:@player, url: player_path, method: :post, local: true do|f|%>
         
         <%= f.text_field :posx, id: "position_x" %>
         <%= f.text_field :posy, id: "position_y" %>
 
         <%= f.submit %>
+        <% end %>
 
         <div class="modal-btn js-modal-close">閉じる</div>
       </div>
