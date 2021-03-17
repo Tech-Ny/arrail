@@ -1,19 +1,16 @@
 class PlayersController < ApplicationController
-  before_action :player_params, only: [:new,:edit]
+  before_action :player_params, only: [:new,:show]
+  before_action :player_set, only: [:show,:update]
+  before_action :update_params, only: [:update]
 
   def index
     @players = Player.all
+    if @players.exists?(user_id:current_user.id)
+      player_set
+    end
   end
 
   def new
-
-    @player = Player.new(player_params)
-    if @player.save
-      redirect_to players_path
-    else 
-      render index
-    end
-
   end
 
   def create
@@ -21,13 +18,26 @@ class PlayersController < ApplicationController
     redirect_to players_path
   end
 
-  private
-  def player_params
-    params.permit(:players).permit(:posx,:posy,user_id:current_user.id)
+  def show
   end
 
-  #def player_set
-  #  @player = Player.find(user_id.current_user.id)
-  #end
+  def update
+    @player.update(update_params)
+    redirect_to player_path(@player.id)
+    
+  end
+
+  private
+  def player_params
+    params.permit(:posx,:posy).merge(user_id:current_user.id)
+  end
+
+  def update_params
+    params.require(:player).permit(:posx,:posy).merge(user_id:current_user.id)
+  end
+
+  def player_set
+    @player = Player.find_by(user_id:current_user.id)
+  end
 
 end

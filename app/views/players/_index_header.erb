@@ -1,7 +1,8 @@
 <header class = "index_header">
-  <div class = "character_,making">
-  <% unless @players.exists?(user_id:current_user.id)%>
-      <%# link_to '続きから始める', player_path(@player.id), class: "continue" %>
+  <div class = "character_making">
+  <% if @players.exists?(user_id:current_user.id)%>
+      <%= link_to '出発', player_path(@player.id), class: "continue" %>
+  <% else %>
       <%= link_to 'プレイヤーを作成', new_player_path, class: "making" %>
   <% end %>
   </div>

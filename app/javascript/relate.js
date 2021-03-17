@@ -1,7 +1,4 @@
-form.addEventListener("submit", (e) => {
-  
-  gon.eventphase = EventPhase;
-  gon.posx = PlayerXPos;
-  gon.posy = PlayerYPos;
-  
+window.addEventListener('load', function()
+document.getElementById("mbtn").onclick = function(e) {
+  console.log("モーダル表示");
 });

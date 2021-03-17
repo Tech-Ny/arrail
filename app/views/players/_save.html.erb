@@ -8,13 +8,16 @@
 </head>
  <body>
  
- <div class="modal-btn js-modal-open">save</div>
+ <div id="mbtn" class="modal-btn js-modal-open">
+ save
+ </div>
   <div class="js-modal">
-    <div class="modal-bg js-modal-close"></div>
+    <div class="modal-bg js-modal-close">
+    </div>
     <div class="modal-wrap">
       <span class="js-modal-close modal-close-btn"><i class="fas fa-times-circle"></i></span>
       <div class="modal-contents">
-        <%= form_with model:@player, url: player_path, method: :post, local: true do|f|%>
+        <%= form_with model:@player ,url:player_path(@player.id),method: :patch, local: true do|f|%>
         
         <%= f.text_field :posx, id: "position_x" %>
         <%= f.text_field :posy, id: "position_y" %>
@@ -22,7 +25,9 @@
         <%= f.submit %>
         <% end %>
 
-        <div class="modal-btn js-modal-close">閉じる</div>
+        <div class="modal-btn js-modal-close">
+        閉じる
+        </div>
       </div>
     </div>
   </div>
