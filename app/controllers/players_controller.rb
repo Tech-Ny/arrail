@@ -19,6 +19,7 @@ class PlayersController < ApplicationController
   end
 
   def show
+    gon.player = @player
   end
 
   def update

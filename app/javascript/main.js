@@ -26,8 +26,8 @@ var MazePathSouth = [["/31rRKZNW+eL._AC_SX466_.jpg","/93236_1.jpg","/TWosmj(1).j
 		                 ["/TWosmj(1).jpg","/31rRKZNW+eL._AC_SX466_.jpg","/93236_1.jpg"],
 									   ["/31rRKZNW+eL._AC_SX466_.jpg","/93236_1/.jpg","/TWosmj(1).jpg"]];
 		
-var PlayerXPos = 0;
-var PlayerYPos = 0;
+var PlayerXPos = gon.player.posx;
+var PlayerYPos = gon.player.posy;
 
 //敵の画像をここに格納しておいてimgを変えるだけでいいようにしておく
 var Enemy = [];
@@ -457,3 +457,19 @@ window.addEventListener("keyup",function(e){
 	 }
 
 });
+
+//save時の処理
+window.addEventListener('load', function(){
+
+	const btn = document.getElementById("mbtn");
+	const posx = document.getElementById("position_x");
+	const posy = document.getElementById("position_y");
+
+	btn.addEventListener('click', function() {
+		posx.value = PlayerXPos;
+		posy.value = PlayerYPos;
+
+	});
+
+});
+	
