@@ -68,4 +68,4 @@ DB(データは追加予定)
 | :posy             | integer    | null: false |
 | :user             | references | null: false |
 
-### belongs_to user　　　 
+### belongs_to user
