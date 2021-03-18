@@ -19,8 +19,8 @@
       <div class="modal-contents">
         <%= form_with model:@player ,url:player_path(@player.id),method: :patch, local: true do|f|%>
         
-        <%= f.text_field :posx, id: "position_x" %>
-        <%= f.text_field :posy, id: "position_y" %>
+        <%= f.text_field :posx, id: "position_x" , readonly:true %>
+        <%= f.text_field :posy, id: "position_y" , readonly:true %>
 
         <%= f.submit %>
         <% end %>
