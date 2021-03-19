@@ -70,7 +70,7 @@ DB(データは追加予定)
 
 ### belongs_to user
 
-### 以下、実際の映像となります
+## 以下、実際の映像となります
 #### サインイン時
 <img width="1269" alt="スクリーンショット 2021-03-19 12 00 22" src="https://user-images.githubusercontent.com/78017327/111725608-b5274680-88aa-11eb-9642-1fa2ca7666d5.png">
 
