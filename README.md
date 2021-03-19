@@ -80,14 +80,14 @@ DB(データは追加予定)
 #### index画面
 <img width="1329" alt="スクリーンショット 2021-03-19 11 54 01" src="https://user-images.githubusercontent.com/78017327/111725127-d50a3a80-88a9-11eb-9dbf-854ef7baaa51.png">
 
-####show画面
+#### show画面
 <img width="1332" alt="スクリーンショット 2021-03-19 11 55 16" src="https://user-images.githubusercontent.com/78017327/111725199-fec36180-88a9-11eb-9a49-e9976161a3b0.png">
 
 
-####show画面戦闘中
+#### show画面戦闘中
 <img width="1319" alt="スクリーンショット 2021-03-19 11 56 17" src="https://user-images.githubusercontent.com/78017327/111725279-24e90180-88aa-11eb-9e75-7cfad6da123b.png">
 
-####save画面 (現在座標のみをセーブ)
+#### save画面 (現在座標のみをセーブ)
 <img width="1123" alt="スクリーンショット 2021-03-19 11 58 58" src="https://user-images.githubusercontent.com/78017327/111725546-9a54d200-88aa-11eb-8ba4-0f1151f85a1a.png">
 
  
