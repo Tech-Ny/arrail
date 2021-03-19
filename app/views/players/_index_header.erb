@@ -5,6 +5,8 @@
   <% else %>
       <%= link_to 'プレイヤーを作成', new_player_path, class: "making" %>
   <% end %>
+      <%= link_to 'ログアウト', destroy_user_session_path, method: :delete, class: "logout" %></li>
+
   </div>
 
 </header>
