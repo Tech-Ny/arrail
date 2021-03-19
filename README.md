@@ -72,4 +72,17 @@ DB(データは追加予定)
 
 ### 以下、実際の映像となります
 #### サインイン時
-<img width="1334" alt="スクリーンショット 2021-03-19 11 51 18" src="https://user-images.githubusercontent.com/78017327/111724971-852b7380-88a9-11eb-8b6c-794da838b464.png">
+
+
+#### サインアップ時
+<img width="1314" alt="スクリーンショット 2021-03-19 11 53 10" src="https://user-images.githubusercontent.com/78017327/111725078-bad05c80-88a9-11eb-80dc-4b20bba9ec87.png">
+
+#### index画面
+<img width="1329" alt="スクリーンショット 2021-03-19 11 54 01" src="https://user-images.githubusercontent.com/78017327/111725127-d50a3a80-88a9-11eb-9dbf-854ef7baaa51.png">
+
+####show画面
+<img width="1332" alt="スクリーンショット 2021-03-19 11 55 16" src="https://user-images.githubusercontent.com/78017327/111725199-fec36180-88a9-11eb-9a49-e9976161a3b0.png">
+
+
+####show画面戦闘中
+<img width="1319" alt="スクリーンショット 2021-03-19 11 56 17" src="https://user-images.githubusercontent.com/78017327/111725279-24e90180-88aa-11eb-9e75-7cfad6da123b.png">
