@@ -72,7 +72,7 @@ DB(データは追加予定)
 
 ### 以下、実際の映像となります
 #### サインイン時
-
+<img width="1269" alt="スクリーンショット 2021-03-19 12 00 22" src="https://user-images.githubusercontent.com/78017327/111725608-b5274680-88aa-11eb-9642-1fa2ca7666d5.png">
 
 #### サインアップ時
 <img width="1314" alt="スクリーンショット 2021-03-19 11 53 10" src="https://user-images.githubusercontent.com/78017327/111725078-bad05c80-88a9-11eb-80dc-4b20bba9ec87.png">
@@ -86,3 +86,8 @@ DB(データは追加予定)
 
 ####show画面戦闘中
 <img width="1319" alt="スクリーンショット 2021-03-19 11 56 17" src="https://user-images.githubusercontent.com/78017327/111725279-24e90180-88aa-11eb-9e75-7cfad6da123b.png">
+
+####save画面 (現在座標のみをセーブ)
+<img width="1123" alt="スクリーンショット 2021-03-19 11 58 58" src="https://user-images.githubusercontent.com/78017327/111725546-9a54d200-88aa-11eb-8ba4-0f1151f85a1a.png">
+
+ 
