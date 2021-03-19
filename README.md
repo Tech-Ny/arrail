@@ -69,3 +69,7 @@ DB(データは追加予定)
 | :user             | references | null: false |
 
 ### belongs_to user
+
+### 以下、実際の映像となります
+#### サインイン時
+<img width="1334" alt="スクリーンショット 2021-03-19 11 51 18" src="https://user-images.githubusercontent.com/78017327/111724971-852b7380-88a9-11eb-8b6c-794da838b464.png">
