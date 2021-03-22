@@ -13,7 +13,6 @@
     <%= render partial:"save"%>
 
 		<div class="game_window">
-		<!---->
 
 			<!--敵と遭遇時にカウントされる-->
 			<div id ="menu_exist">
@@ -23,7 +22,22 @@
 				<div id="menu4" class="menu"></div>
 			</div>
 
+			<!--ここステータス-->
+			<div class ="status_window">
+				<div id="hp" class="status"></div>
+				<div id="mp" class="status"></div>
+				<div id="lv" class="status"></div>
+			</div>
+
+			<!--魔法とか-->
 			<div id ="magic_menu">
+				<div >
+				<div >
+				<div >
+			</div>
+
+			<!--スキルとか-->
+			<div id ="skill_menu">
 				<div >
 				<div >
 				<div >
@@ -38,10 +52,6 @@
 				<span class="message">スタート地点は[ 0 , 0 ]だ<br>覚えておこう</span>
 			</div>
 
-      <%# form_for(@info, id:'save', class:'save_button',url: 'create', html: {method: 'GET'}) do |f| %>
-			<%# form_with model:@info, id:'save', class:'save_button',method: :get, local: true do|f|%>
-			<%#f.submit "セーブ",class:"button"%>
-			<%#end %>
 		</div>
 	</body>
 </html>

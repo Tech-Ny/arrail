@@ -30,14 +30,17 @@ class PlayersController < ApplicationController
 
   private
   def player_params
+    #playerを定めずposx:posyのみを設定
     params.permit(:posx,:posy).merge(user_id:current_user.id)
   end
 
   def update_params
+    #updateにはidが必要なのでplayerをrequireしておく
     params.require(:player).permit(:posx,:posy).merge(user_id:current_user.id)
   end
 
   def player_set
+    #idからではなくuser_idを参照してindexからでも1対1の関係を作る
     @player = Player.find_by(user_id:current_user.id)
   end
 

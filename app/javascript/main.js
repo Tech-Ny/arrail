@@ -5,15 +5,17 @@ let EncounterNum;      //敵が出る乱数
 //動作確認用 ここから
 //仮置き敵ステータス tableでリストアップしたものをまとめたい
 let EnemyHp = 50;
-let EnemyAtk = 5;
+let EnemyAtk = 10;
 let EnemySpd = 10;
 let EnemyDef = 15;
 let Lv = 1;
       
-//仮置きご自身のステータス そのうち内容をuserから取って来させるつもり
+//仮置きご自身のステータス そのうち内容をuserから取って来させるつもり 他のデータと同じようにgonで移動可能か?
+let PlayerMaxHp = 100;
 let PlayerHp =  100;
-let PlayerAtk = 10;
+let PlayerMaxMp = 10;
 let PlayerMp = 10;
+let PlayerAtk = 10;
 let PlayerSpd = 15;
 let PlayerDef = 15;
 let Exp = 0;
@@ -24,13 +26,28 @@ let Exp = 0;
 //迷路を作成する画像配列 白紙部分に入れない設定をする
 var MazePathSouth = [["/31rRKZNW+eL._AC_SX466_.jpg","/93236_1.jpg","/TWosmj(1).jpg"],
 		                 ["/TWosmj(1).jpg","/31rRKZNW+eL._AC_SX466_.jpg","/93236_1.jpg"],
-									   ["/31rRKZNW+eL._AC_SX466_.jpg","/93236_1/.jpg","/TWosmj(1).jpg"]];
-		
+									   ["/31rRKZNW+eL._AC_SX466_.jpg","/93236_1.jpg","/TWosmj(1).jpg"]];
+
+//gonを利用し座標を取得
 var PlayerXPos = gon.player.posx;
 var PlayerYPos = gon.player.posy;
 
+//windowについて
+window.onload = onLoad;
+
 //敵の画像をここに格納しておいてimgを変えるだけでいいようにしておく
 var Enemy = [];
+
+//ステータス表記
+function Status(){
+	let HP = document.getElementById("hp");
+	let MP = document.getElementById("mp");
+	let LV = document.getElementById("lv");
+
+	HP.innerHTML ="HP : " + PlayerHp + " / " + PlayerMaxHp;
+  MP.innerHTML ="MP : " + PlayerMp + " / " + PlayerMaxMp;
+	LV.innerHTML ="LV : " + Lv;
+}
 		
 //Encounter 遭遇したら敵が現れたを表示、EventPhaseを2に
 function Encounter(){
@@ -170,6 +187,7 @@ function NormalAttack(){
 	}else{
 		EventPhase = 3;
 	}
+	Status()
 }
       
 //魔法選択時 固定ダメージ
@@ -207,6 +225,7 @@ function MagicAttack(){
 			EventPhase = 3;
 		}
   }
+	Status()
 }  
 
 //特技使用時 物理の1.8倍攻撃
@@ -244,6 +263,7 @@ function Skill(){
 			EventPhase = 3;
 		}
   }
+	Status()
 }
 
 //逃げた時の行動
@@ -257,7 +277,19 @@ function Escape(){
 	if(0.5<EscapeNum){ //なければ半分くらい
 		console.log("Escape succeed");
 		document.getElementById('message').innerHTML = '<span class="message">にげきった！</span>';
-		EventPhase = 6;	
+		let Menu = document.getElementById("menu_exist");
+		let NAttack = document.getElementById("menu1");
+		let MAttack = document.getElementById("menu2");
+		let SAttack = document.getElementById("menu3");
+		let Escape = document.getElementById("menu4");
+
+		Menu.classList.remove("game_menu");
+		NAttack.innerHTML = "";
+		MAttack.innerHTML = "";
+		SAttack.innerHTML = "";
+		Escape.innerHTML = "";
+
+		EventPhase = 0;	
 	}else{                                   //ダメなら
 		console.log("escape failed");
 		document.getElementById('message').innerHTML = '<span class="message">しかし まわりこまれてしまった！</span>';
@@ -272,6 +304,10 @@ function EnemyBattleManager(){
 	console.log("Enemy attack");
   console.log(EnemyHp);
 	document.getElementById('message').innerHTML = '<span class="message">てきの こうげき！</span>';
+
+	PlayerHp -= (EnemyAtk-PlayerDef/3);
+
+	Status()
 
 	if(EnemySpd>PlayerSpd){
 		EventPhase = 4;
@@ -311,10 +347,15 @@ function Results(){
 		EventPhase = 0;
 	}
 }
-	
+
+
+//起動時に1回読み込む
+function onLoad(){
+	Status();
+}
+
 //操作について全てここで監視する 環境変数を定めておけば変えられる
 window.addEventListener("keyup",function(e){
-
 	switch(EventPhase){
 			
 	 case 0://マップ移動時はココ参照
@@ -425,7 +466,7 @@ window.addEventListener("keyup",function(e){
 			break;
 
 			default:
-				ctiveMenu(1);
+				activeMenu(1);
 			break;
 		}
 	 break;
@@ -461,10 +502,12 @@ window.addEventListener("keyup",function(e){
 //save時の処理
 window.addEventListener('load', function(){
 
+	//EventListenerに変更された値を渡す readonly下でも更新可能
 	const btn = document.getElementById("mbtn");
 	const posx = document.getElementById("position_x");
 	const posy = document.getElementById("position_y");
 
+	
 	btn.addEventListener('click', function() {
 		posx.value = PlayerXPos;
 		posy.value = PlayerYPos;
