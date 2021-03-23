@@ -13,15 +13,73 @@ let EnemyDef = 15;
 let Lv = 1;
       
 //仮置きご自身のステータス そのうち内容をuserから取って来させるつもり 他のデータと同じようにgonで移動可能か?
+//装備は値をもらってから算出するように
 let PlayerMaxHp = 1000;
 let PlayerHp =  1000;
 let PlayerMaxMp = 500;
 let PlayerMp = 500;
 let PlayerAtk = 10;
+let EquipAtk;
 let PlayerSpd = 15;
 let PlayerDef = 15;
+let EquipDef;
 let Exp = 0;
 //ここまで
+
+
+	//オブジェクト名{アイテムのID,アイテムの名前,アイテムの種類,説明文}		ここにアイテムのデータを追加する データベースのseedにおいといて追加する方が綺麗に見える
+	var Key   = {item_id: 0,item_name:"鍵",item_type : 0,describe:"ドアを開けるための鍵"};
+	var CKey =  {item_id: 1,item_name:"Cコード",item_type : 0,describe:"配列の真ん中にあるロックを解くカギ"};
+	var Sword = {item_id: 10,item_name:"つるぎ",item_type : 1,describe:"刃がかけたつるぎ<br>持っていると攻撃力が上がる"};
+	var Spire = {item_id: 11,item_name:"やり",item_type : 1,describe:"先が錆びたやり<br>持っていると攻撃力が上がる"};
+  var Axe   = {item_id: 12,item_name:"オノ",item_type : 1,describe:"柄がボロボロのオノ<br>持っていると攻撃力が上がる"};
+	var Cap   = {item_id: 100,item_name:"変な帽子",item_type : 2,describe:"ここに来た時偶然手に入れた帽子"};
+	var Shirt = {item_id: 101,item_name:"普段着",item_type : 2,describe:"いつもの普段着<br>一枚で冒険とは我ながら命知らずだ"};
+	var Shield = {item_id: 102,item_name:"小さな盾",item_type : 2,describe:"バックラーというらしい<br>広く使われた小型の盾"}; 
+	var GPortion = {item_id: 1000,item_name:"緑のクスリ",item_type : 3,describe:"緑色の液体のクスリ<br>おいしくない..."};
+  var BPortion = {item_id: 1001,item_name:"青のクスリ",item_type : 3,describe:"青色の液体のクスリ<br>飲みやすく改良されたとか"};
+	var RPortion = {item_id: 1002,item_name:"赤のクスリ",item_type : 3,describe:"赤色の液体のクスリ<br>生き返るほど辛いらしい"};
+	var GLeaf = {item_id: 10000,item_name:"ミドリソウ",item_type : 4,describe:"緑の草 ミントではない<br>頭が冴えわたる"};
+	var BLeaf = {item_id: 10001,item_name:"アオイソウ",item_type : 4,describe:"青い草 少し苦い<br>食べるとふわふわする"};
+	var WLeaf = {item_id: 10002,item_name:"シラクサ",item_type : 4,describe:"白い草 とても綺麗<br>食べるとあらゆる苦痛を忘れる"};
+
+	
+	var ItemBag = [];
+
+	window.addEventListener("keyup",function(e){
+		if(e.keyCode == 13){
+			//railsで読み込んだ鞄の中身を開始時にpushすることで実現できるはず
+			ItemBag.push(Key,Sword,Spire,Axe);
+			//↓でオブジェクトキーを自由に使えるようにする関数を作成 中に含まれているプロパティ名でif文などが使えるように 何かの操作の後にこれを呼ぶ関数をおいておく
+			Object.keys(ItemBag).forEach(function(key){
+			});
+			for(i = 0;i< ItemBag.length;i++){				
+					if(ItemBag[i].item_type == 1){
+						switch(ItemBag[i].item_id){
+							case 10:
+								atk += 5;
+								break;
+
+							case 11:
+								atk += 7;
+								break;
+
+							case 12:
+								atk += 10;
+								break;
+
+								default:
+									break;
+					}
+			}
+		}
+				console.log(ItemBag[0].item_name);
+				console.log(ItemBag[1].item_name);
+				console.log(ItemBag[2].item_name);
+				console.log(atk);
+	}
+	
+	});
 
 //railsのテーブルから情報持って来れるなら敵のステータスを保存しておいて呼び出す方が良いかも
 		
@@ -76,10 +134,94 @@ function BattleCommand(){
 	Escape.innerHTML = "にげる";
 }
 
+//オブジェクトを取得してアイテムのキーを使用できるようにする
+function ItemSet(){
+	Object.keys(ItemBag).forEach(function(key){
+	});
+}
 
 //道具に対してはこちらから
-function Items(){
-	
+function ItemManager(){
+	ItemSet();
+	for(i = 0;i< ItemBag.length;i++){				
+		if(ItemBag[i].item_type == 0){//大事なもの
+			switch(ItemBag[i].item_id){
+				case 0:
+				break;
+
+				case 1:
+				break;
+			}
+   	}if(ItemBag[i].item_type == 1){//武器系統
+			switch(ItemBag[i].item_id){
+				case 10:
+					EquipAtk += 5;
+				break;
+
+				case 11:
+					EquipAtk += 7;
+				break;
+
+				case 12:
+					EquipAtk += 10;
+				break;
+
+				default:
+				break;
+			}
+		}if(ItemBag[i].item_type == 2){//防具系統
+			switch(ItemBag[i].item_id){
+				case 100:
+					EquipDef += 5;
+				break;
+							
+				case 101:
+					EquipDef += 7;
+				break;
+
+				case 102:
+					EquipDef += 10;
+				break;
+
+				default:
+				break;
+			}
+		}if(ItemBag[i].item_type == 3){//回復アイテム
+			switch(ItemBag[i].item_id){
+				case 1000:
+					PlayerHp += 50;
+					break;
+
+				case 1001:
+					PlayerHp += 100;
+					break;
+
+				case 1002:
+					PlayerHp += 1000;
+					break;
+
+					default:
+						break;
+			}
+		}if(ItemBag[i].item_type == 4){//MP回復用
+			switch(ItemBag[i].item_id){
+				case 10000:
+					PlayerMp += 50;
+					break;
+
+				case 10001:
+					PlayerMp += 100;
+					break;
+
+				case 10002:
+					PlayerMp += 1000;
+					break;
+
+					default:
+						break;
+			}
+		}
+	}
 }
 
 //呼び出されたコマンドに対して、視覚的な選択をさせる矢印の描画
@@ -132,7 +274,7 @@ function PlayerBattleManager(BattleCursor){
 //魔法が選ばれたら呼び出す
 function MagicCommand(){
 
-	document.getElementById('message').innerHTML = '<span class="message">魔法を　選ぼう<br/>(↑↓キーを選んで enterで決定)</span>';
+	document.getElementById('message').innerHTML = '<span class="message">魔法を 選ぼう<br/>(↑↓キーを選んで enterで決定)</span>';
 	//まずはコマンドの呼び出しから
 	let MagicMenu = document.getElementById("magic_exist");
 	let MagicFirst = document.getElementById("magic_menu1");

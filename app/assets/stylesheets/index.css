@@ -60,6 +60,16 @@ img{
 
 }
 
+.item_menu{
+  width:150px;
+  border:3px solid white;
+  border-radius:6px;
+  margin:1em;
+  padding:1em;
+  float:left;
+
+}
+
 /*beforeはメニューアクティブ と設定した場所の前にこのマークをつける、という意味*/
 .menu-active:before {
   content: '▶︎';
