@@ -19,8 +19,17 @@
       <div class="modal-contents">
         <%= form_with model:@player ,url:player_path(@player.id),method: :patch, local: true do|f|%>
         
-        <%= f.text_field :posx, id: "position_x" , readonly:true %>
-        <%= f.text_field :posy, id: "position_y" , readonly:true %>
+        X座標<%= f.text_field :posx, id: "position_x" , readonly:true %>
+        Y座標<%= f.text_field :posy, id: "position_y" , readonly:true %>
+        HP<%= f.text_field :playerhp, id: "hp" , readonly:true %>
+        MP<%= f.text_field :playermp, id: "mp" , readonly:true %>
+        MaxHP<%= f.text_field :playermaxhp, id: "max_hp" , readonly:true %>
+        MaxMP<%= f.text_field :playermaxmp, id: "max_mp" , readonly:true %>
+        攻撃力<%= f.text_field :playeratk, id: "atk" , readonly:true %>
+        守備力<%= f.text_field :playerdef, id: "def" , readonly:true %>
+        はやさ<%= f.text_field :playerspd, id: "spd" , readonly:true %>
+        レベル<%= f.text_field :lv, id: "lv" , readonly:true %>
+        経験値<%= f.text_field :exp, id: "exp" , readonly:true %>
 
         <%= f.submit %>
         <% end %>

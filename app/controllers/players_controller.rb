@@ -31,12 +31,12 @@ class PlayersController < ApplicationController
   private
   def player_params
     #playerを定めずposx:posyのみを設定
-    params.permit(:posx,:posy).merge(user_id:current_user.id)
+    params.permit(:posx,:posy,:playerhp,:playermaxhp,:playermp,:playermaxmp,:playeratk,:playerspd,:playerdef,:lv,:exp).merge(user_id:current_user.id)
   end
 
   def update_params
     #updateにはidが必要なのでplayerをrequireしておく
-    params.require(:player).permit(:posx,:posy).merge(user_id:current_user.id)
+    params.require(:player).permit(:posx,:posy,:playerhp,:playermaxhp,:playermp,:playermaxmp,:playeratk,:playerspd,:playerdef,:lv,:exp).merge(user_id:current_user.id)
   end
 
   def player_set

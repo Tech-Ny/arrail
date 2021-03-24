@@ -2,6 +2,7 @@ var EventPhase = 0;    //画面遷移について
 var BattleCursor = 1;  //戦闘のカーソル
 var MagicCursor = 1;   //呪文選択時のカーソル
 var SkillCursor = 1;   //特技選択時のカーソル
+var ItemCursor = 1;
 let EncounterNum;      //敵が出る乱数
 
 //動作確認用 ここから
@@ -10,76 +11,50 @@ let EnemyHp = 50;
 let EnemyAtk = 150;
 let EnemySpd = 10;
 let EnemyDef = 15;
-let Lv = 1;
+let Lv = gon.player.lv;
       
 //仮置きご自身のステータス そのうち内容をuserから取って来させるつもり 他のデータと同じようにgonで移動可能か?
-//装備は値をもらってから算出するように
-let PlayerMaxHp = 1000;
-let PlayerHp =  1000;
-let PlayerMaxMp = 500;
-let PlayerMp = 500;
-let PlayerAtk = 10;
+//装備後のステータスは値をもらってから算出するように
+
+let PlayerMaxHp = gon.player.playermaxhp;
+let PlayerHp =  gon.player.playerhp;
+let PlayerMaxMp = gon.player.playermaxmp;
+let PlayerMp = gon.player.playermp;
+let PlayerAtk = gon.player.playeratk;
 let EquipAtk;
-let PlayerSpd = 15;
-let PlayerDef = 15;
+let PlayerSpd = gon.player.playerspd;
+let PlayerDef = gon.player.playerdef;
 let EquipDef;
-let Exp = 0;
+let Exp = gon.player.exp;
+
 //ここまで
 
 
-	//オブジェクト名{アイテムのID,アイテムの名前,アイテムの種類,説明文}		ここにアイテムのデータを追加する データベースのseedにおいといて追加する方が綺麗に見える
-	var Key   = {item_id: 0,item_name:"鍵",item_type : 0,describe:"ドアを開けるための鍵"};
-	var CKey =  {item_id: 1,item_name:"Cコード",item_type : 0,describe:"配列の真ん中にあるロックを解くカギ"};
-	var Sword = {item_id: 10,item_name:"つるぎ",item_type : 1,describe:"刃がかけたつるぎ<br>持っていると攻撃力が上がる"};
-	var Spire = {item_id: 11,item_name:"やり",item_type : 1,describe:"先が錆びたやり<br>持っていると攻撃力が上がる"};
-  var Axe   = {item_id: 12,item_name:"オノ",item_type : 1,describe:"柄がボロボロのオノ<br>持っていると攻撃力が上がる"};
-	var Cap   = {item_id: 100,item_name:"変な帽子",item_type : 2,describe:"ここに来た時偶然手に入れた帽子"};
-	var Shirt = {item_id: 101,item_name:"普段着",item_type : 2,describe:"いつもの普段着<br>一枚で冒険とは我ながら命知らずだ"};
-	var Shield = {item_id: 102,item_name:"小さな盾",item_type : 2,describe:"バックラーというらしい<br>広く使われた小型の盾"}; 
-	var GPortion = {item_id: 1000,item_name:"緑のクスリ",item_type : 3,describe:"緑色の液体のクスリ<br>おいしくない..."};
-  var BPortion = {item_id: 1001,item_name:"青のクスリ",item_type : 3,describe:"青色の液体のクスリ<br>飲みやすく改良されたとか"};
-	var RPortion = {item_id: 1002,item_name:"赤のクスリ",item_type : 3,describe:"赤色の液体のクスリ<br>生き返るほど辛いらしい"};
-	var GLeaf = {item_id: 10000,item_name:"ミドリソウ",item_type : 4,describe:"緑の草 ミントではない<br>頭が冴えわたる"};
-	var BLeaf = {item_id: 10001,item_name:"アオイソウ",item_type : 4,describe:"青い草 少し苦い<br>食べるとふわふわする"};
-	var WLeaf = {item_id: 10002,item_name:"シラクサ",item_type : 4,describe:"白い草 とても綺麗<br>食べるとあらゆる苦痛を忘れる"};
+//オブジェクト名{アイテムのID,アイテムの名前,アイテムの種類,説明文}		ここにアイテムのデータを追加する データベースのseedにおいといて追加する方が綺麗に見える
+var Key   = {item_id: 0,item_name:"鍵",item_type : 0,describe:"ドアを開けるための鍵"};
+var SKey =  {item_id: 1,item_name:"Sコード",item_type : 0,describe:"配列の真ん中にあるロックを解くカギ"};
+var Sword = {item_id: 10,item_name:"つるぎ",item_type : 1,describe:"刃がかけたつるぎ<br>使うと攻撃力が上がる"};
+var Spire = {item_id: 11,item_name:"やり",item_type : 1,describe:"先が錆びたやり<br>持うと攻撃力が上がる"};
+var Axe   = {item_id: 12,item_name:"オノ",item_type : 1,describe:"柄がボロボロのオノ<br>持うと攻撃力が上がる"};
+var Cap   = {item_id: 100,item_name:"変な帽子",item_type : 2,describe:"ここに来た時偶然手に入れた帽子"};
+var Shirt = {item_id: 101,item_name:"普段着",item_type : 2,describe:"いつもの普段着<br>一枚で冒険とは我ながら命知らずだ"};
+var Shield = {item_id: 102,item_name:"小さな盾",item_type : 2,describe:"バックラーというらしい<br>広く使われた小型の盾"}; 
+var GPortion = {item_id: 1000,item_name:"緑のクスリ",item_type : 3,describe:"緑色の液体のクスリ<br>おいしくない..."};
+var BPortion = {item_id: 1001,item_name:"青のクスリ",item_type : 3,describe:"青色の液体のクスリ<br>飲みやすく改良されたとか"};
+var RPortion = {item_id: 1002,item_name:"赤のクスリ",item_type : 3,describe:"赤色の液体のクスリ<br>生き返るほど辛いらしい"};
+var GLeaf = {item_id: 10000,item_name:"ミドリソウ",item_type : 4,describe:"緑の草 ミントではない<br>頭が冴えわたる"};
+var BLeaf = {item_id: 10001,item_name:"アオイソウ",item_type : 4,describe:"青い草 少し苦い<br>食べるとふわふわする"};
+var WLeaf = {item_id: 10002,item_name:"シラクサ",item_type : 4,describe:"白い草 とても綺麗<br>食べるとあらゆる苦痛を忘れる"};
+var Null = {item_id: 100000,item_name:" ",iem_type : 10, describe:"空きスペース"};
 
-	
-	var ItemBag = [];
+//道具鞄配列
+var ItemBag = [Null,Null,Null,Null,Null,Null,Null,Null,Null,Null];
 
-	window.addEventListener("keyup",function(e){
-		if(e.keyCode == 13){
-			//railsで読み込んだ鞄の中身を開始時にpushすることで実現できるはず
-			ItemBag.push(Key,Sword,Spire,Axe);
-			//↓でオブジェクトキーを自由に使えるようにする関数を作成 中に含まれているプロパティ名でif文などが使えるように 何かの操作の後にこれを呼ぶ関数をおいておく
-			Object.keys(ItemBag).forEach(function(key){
-			});
-			for(i = 0;i< ItemBag.length;i++){				
-					if(ItemBag[i].item_type == 1){
-						switch(ItemBag[i].item_id){
-							case 10:
-								atk += 5;
-								break;
-
-							case 11:
-								atk += 7;
-								break;
-
-							case 12:
-								atk += 10;
-								break;
-
-								default:
-									break;
-					}
-			}
-		}
-				console.log(ItemBag[0].item_name);
-				console.log(ItemBag[1].item_name);
-				console.log(ItemBag[2].item_name);
-				console.log(atk);
-	}
-	
-	});
+//道具テスト用
+ItemBag.splice(0,1,Key);
+ItemBag.splice(1,1,Sword);
+ItemBag.splice(2,1,GPortion);
+ItemBag.splice(3,1,GLeaf);
 
 //railsのテーブルから情報持って来れるなら敵のステータスを保存しておいて呼び出す方が良いかも
 		
@@ -100,13 +75,14 @@ var Enemy = [];
 
 //ステータス表記
 function Status(){
-	let HP = document.getElementById("hp");
-	let MP = document.getElementById("mp");
-	let LV = document.getElementById("lv");
+	let HP = document.getElementById("status_hp");
+	let MP = document.getElementById("status_mp");
+	let LV = document.getElementById("status_lv");
 
-	HP.innerHTML ="HP : " + PlayerHp + " / " + PlayerMaxHp;
-  MP.innerHTML ="MP : " + PlayerMp + " / " + PlayerMaxMp;
-	LV.innerHTML ="LV : " + Lv;
+	//HP.insertAdjacentHTML('afterend',"HP : " + PlayerHp + " / " + PlayerMaxHp)
+	HP.innerHTML = "HP : " + PlayerHp + " / " + PlayerMaxHp;
+  MP.innerHTML = "MP : " + PlayerMp + " / " + PlayerMaxMp;
+	LV.innerHTML = "LV : " + Lv;
 }
 		
 //Encounter 遭遇したら敵が現れたを表示、EventPhaseを2に
@@ -140,88 +116,114 @@ function ItemSet(){
 	});
 }
 
+//装備アイテムがあるなら埋めていく
+function EquipmentCheck(){
+
+}
+
 //道具に対してはこちらから
-function ItemManager(){
+function ItemManager(ItemCursor){
 	ItemSet();
 	for(i = 0;i< ItemBag.length;i++){				
-		if(ItemBag[i].item_type == 0){//大事なもの
-			switch(ItemBag[i].item_id){
+		if(ItemBag[ItemCursor-1].item_type == 0){//大事なもの
+			switch(ItemBag[ItemCursor-1].item_id){
 				case 0:
+					document.getElementById('message').innerHTML = '<span class="message">今使う必要は なさそうだ</span>';
 				break;
 
 				case 1:
+					document.getElementById('message').innerHTML = '<span class="message">今使う必要は なさそうだ</span>';
 				break;
 			}
-   	}if(ItemBag[i].item_type == 1){//武器系統
-			switch(ItemBag[i].item_id){
+   	}else if(ItemBag[ItemCursor-1].item_type == 1){//武器系統
+			switch(ItemBag[ItemCursor-1].item_id){
 				case 10:
-					EquipAtk += 5;
+					document.getElementById('message').innerHTML = '<span class="message">手放さない限りは攻撃力が上がるようだ</span>';
 				break;
 
 				case 11:
-					EquipAtk += 7;
+					document.getElementById('message').innerHTML = '<span class="message">手放さない限りは攻撃力が上がるようだ</span>';
 				break;
 
 				case 12:
-					EquipAtk += 10;
+					document.getElementById('message').innerHTML = '<span class="message">手放さない限りは攻撃力が上がるようだ</span>';
 				break;
 
 				default:
 				break;
 			}
-		}if(ItemBag[i].item_type == 2){//防具系統
-			switch(ItemBag[i].item_id){
+		}else if(ItemBag[ItemCursor-1].item_type == 2){//防具系統
+			switch(ItemBag[ItemCursor-1].item_id){
 				case 100:
-					EquipDef += 5;
+					document.getElementById('message').innerHTML = '<span class="message">手放さない限りは防御力が上がるようだ</span>';
 				break;
 							
 				case 101:
-					EquipDef += 7;
+				  document.getElementById('message').innerHTML = '<span class="message">手放さない限りは防御力が上がるようだ</span>';
 				break;
 
 				case 102:
-					EquipDef += 10;
+					document.getElementById('message').innerHTML = '<span class="message">手放さない限りは防御力が上がるようだ</span>';
 				break;
 
 				default:
 				break;
 			}
-		}if(ItemBag[i].item_type == 3){//回復アイテム
-			switch(ItemBag[i].item_id){
+		}else if(ItemBag[ItemCursor-1].item_type == 3){//回復アイテム
+			switch(ItemBag[ItemCursor-1].item_id){
 				case 1000:
+					document.getElementById('message').innerHTML = '<span class="message">HPが回復した</span>';
 					PlayerHp += 50;
+					ItemBag.splice(ItemCursor-1,1,Null);
 					break;
 
 				case 1001:
+					document.getElementById('message').innerHTML = '<span class="message">HPが回復した</span>';
 					PlayerHp += 100;
+					ItemBag.splice(ItemCursor-1,1,Null);
 					break;
 
 				case 1002:
+					document.getElementById('message').innerHTML = '<span class="message">HPが回復した</span>';
 					PlayerHp += 1000;
+					ItemBag.splice(ItemCursor-1,1,Null);
 					break;
 
 					default:
 						break;
 			}
-		}if(ItemBag[i].item_type == 4){//MP回復用
-			switch(ItemBag[i].item_id){
+		}else if(ItemBag[ItemCursor-1].item_type == 4){//MP回復用
+			switch(ItemBag[ItemCursor-1].item_id){
 				case 10000:
+					document.getElementById('message').innerHTML = '<span class="message">MPが回復した</span>';
 					PlayerMp += 50;
+					ItemBag.splice(ItemCursor-1,1,Null);
+
 					break;
 
 				case 10001:
+					document.getElementById('message').innerHTML = '<span class="message">MPが回復した</span>';
 					PlayerMp += 100;
+					ItemBag.splice(ItemCursor-1,1,Null);
+
 					break;
 
 				case 10002:
+					document.getElementById('message').innerHTML = '<span class="message">MPが回復した</span>';
 					PlayerMp += 1000;
+					ItemBag.splice(ItemCursor-1,1,Null);
+
 					break;
 
 					default:
 						break;
 			}
 		}
+		
 	}
+	EventPhase = 0;
+	ItemAddRemover();
+
 }
 
 //呼び出されたコマンドに対して、視覚的な選択をさせる矢印の描画
@@ -240,8 +242,22 @@ function activeMenu(id){
 	}
 }
 
-    
-    //プレイヤーが選択した行動によって行う行動
+//道具に対して矢印の描画
+function ItemMenu(id){
+	if (ItemCursor == id) {
+	//前回と同じメニューが選ばれた場合はコマンドを実行
+	    //PlayerBattleManager(1);
+	  } else {
+	  	if (ItemCursor != 0) {
+		    //クラス名なので変えなくて良い
+			  document.getElementById('item_menu' + ItemCursor).className = 'menu';
+		  }
+		  document.getElementById('item_menu' + id).className = 'menu menu-active';
+			ItemCursor = id;
+	}
+}
+
+//プレイヤーが選択した行動によって行う行動
 function PlayerBattleManager(BattleCursor){
 	switch(BattleCursor){
 
@@ -253,7 +269,6 @@ function PlayerBattleManager(BattleCursor){
 		case 2:
 		  MagicSelection();
 			
-
 		break;
 
 		case 3:
@@ -269,6 +284,32 @@ function PlayerBattleManager(BattleCursor){
 		default:
 		break;
 	}
+}
+
+//道具が追加、使用されるたびに呼び出されるようにする 何もない場合はからの空きスペースが入っている
+function ItemAddRemover(){
+	console.log(ItemBag)
+	ItemSet();
+	let itemFirst = document.getElementById("item_menu1");
+	let itemSecond = document.getElementById("item_menu2");
+	let itemThird = document.getElementById("item_menu3");
+	let itemFourth = document.getElementById("item_menu4");
+	let itemFifth = document.getElementById("item_menu5");
+	let itemSixth = document.getElementById("item_menu6");
+	let itemSeventh = document.getElementById("item_menu7");
+	let itemEighth = document.getElementById("item_menu8");
+	let itemNinth = document.getElementById("item_menu9");
+	let itemTenth = document.getElementById("item_menu10");
+	itemFirst.innerHTML = ItemBag[0].item_name;
+	itemSecond.innerHTML = ItemBag[1].item_name;
+	itemThird.innerHTML = ItemBag[2].item_name;
+	itemFourth.innerHTML = ItemBag[3].item_name;
+	itemFifth.innerHTML = ItemBag[4].item_name;
+	itemSixth.innerHTML = ItemBag[5].item_name;
+	itemSeventh.innerHTML = ItemBag[6].item_name;
+	itemEighth.innerHTML = ItemBag[7].item_name;
+	itemNinth.innerHTML = ItemBag[8].item_name;
+	itemTenth.innerHTML = ItemBag[9].item_name;
 }
 
 //魔法が選ばれたら呼び出す
@@ -332,8 +373,6 @@ function SkillActiveMenu(id){
 			console.log(SkillCursor);
 	}
 }
-
-
 
 //とくぎが選ばれたら呼び出す
 function SkillCommand(){
@@ -416,7 +455,7 @@ function MagicSelection(){
 	}
 }
 
-//特技を選ぶと最終的にこちらへ移動する
+//特技を選ぶとこちらへ移動する
 function SkillSelection(){
 	switch(SkillCursor){
 		case 1:
@@ -485,7 +524,7 @@ function NormalAttack(){
 	}else{
 		EventPhase = 3;
 	}
-	Status()
+	Status();
 }
 
 //ーーーーーーーーーーーーーーーーーーーーーーーーーーーー魔法群ーーーーーーーーーーーーーーーーーーーーーーーーーーーー//
@@ -524,7 +563,7 @@ function MagicFirst(){
 			EventPhase = 3;
 		}
   }
-	Status()
+	Status();
 }  
 //ーーーーーーーーーーーーーーーーーーーーーーーーーーーー//
 
@@ -563,7 +602,7 @@ function MagicSecond(){
 			EventPhase = 3;
 		}
   }
-	Status()
+	Status();
 }  
 //ーーーーーーーーーーーーーーーーーーーーーーーーーーーー//
 
@@ -602,7 +641,7 @@ function MagicThird(){
 			EventPhase = 3;
 		}
   }
-	Status()
+	Status();
 }  
 //ーーーーーーーーーーーーーーーーーーーーーーーーーーーー//
 
@@ -641,7 +680,7 @@ function MagicFourth(){
 			EventPhase = 3;
 		}
   }
-	Status()
+	Status();
 }  
 //ーーーーーーーーーーーーーーーーーーーーーーーーーーーー//
 
@@ -680,7 +719,7 @@ function MagicFifth(){
 			EventPhase = 3;
 		}
   }
-	Status()
+	Status();
 }  
 //ーーーーーーーーーーーーーーーーーーーーーーーーーーーー//
 
@@ -719,7 +758,7 @@ function MagicSixth(){
 			EventPhase = 3;
 		}
   }
-	Status()
+	Status();
 }  	
 //ーーーーーーーーーーーーーーーーーーーーーーーーーーーー//
 
@@ -758,7 +797,7 @@ function MagicSeventh(){
 			EventPhase = 3;
 		}
   }
-	Status()
+	Status();
 }  
 //ーーーーーーーーーーーーーーーーーーーーーーーーーーーー//
 
@@ -798,7 +837,7 @@ function MagicEighth(){
 			EventPhase = 3;
 		}
   }
-	Status()
+	Status();
 }  
 //ーーーーーーーーーーーーーーーーーーーーーーーーーーーー//
 
@@ -838,7 +877,7 @@ function MagicNinth(){
 			EventPhase = 3;
 		}
   }
-	Status()
+	Status();
 }  
 //ーーーーーーーーーーーーーーーーーーーーーーーーーーーー//
 
@@ -880,7 +919,7 @@ function SkillFirst(){
 			EventPhase = 3;
 		}
   }
-	Status()
+	Status();
 }
 
 function SkillSecond(){
@@ -917,7 +956,7 @@ function SkillSecond(){
 			EventPhase = 3;
 		}
   }
-	Status()
+	Status();
 }
 
 function SkillThird(){
@@ -954,7 +993,7 @@ function SkillThird(){
 			EventPhase = 3;
 		}
   }
-	Status()
+	Status();
 }
 
 function SkillFourth(){
@@ -991,7 +1030,7 @@ function SkillFourth(){
 			EventPhase = 3;
 		}
   }
-	Status()
+	Status();
 }
 
 //残心は唯一の回復手段
@@ -1026,7 +1065,7 @@ function SkillFifth(){
 			EventPhase = 3;
 		}
   }
-	Status()
+	Status();
 }
 
 function SkillSixth(){
@@ -1063,7 +1102,7 @@ function SkillSixth(){
 			EventPhase = 3;
 		}
   }
-	Status()
+	Status();
 }
 
 function SkillSeventh(){
@@ -1100,7 +1139,7 @@ function SkillSeventh(){
 			EventPhase = 3;
 		}
   }
-	Status()
+	Status();
 }
 
 function SkillEighth(){
@@ -1137,7 +1176,7 @@ function SkillEighth(){
 			EventPhase = 3;
 		}
   }
-	Status()
+	Status();
 }
 
 function SkillNinth(){
@@ -1174,7 +1213,7 @@ function SkillNinth(){
 			EventPhase = 3;
 		}
   }
-	Status()
+	Status();
 }
 //ーーーーーーーーーーーーーーーーーーーーーーーーーーーー特技群終わりーーーーーーーーーーーーーーーーーーーーーーーーー//
 
@@ -1273,9 +1312,10 @@ window.addEventListener("keyup",function(e){
 	switch(EventPhase){
 			
 	 case 0://マップ移動時はココ参照
+
 		console.log("key Up:" + e.key);
 		document.getElementById('message').innerHTML = '<span class="message">配列の続きを 進もう</span>';
-					
+
 		switch(e.keyCode){//キーコード→←↑↓について
 			case 38:
 				e.preventDefault();
@@ -1339,6 +1379,12 @@ window.addEventListener("keyup",function(e){
 					if(EncounterNum*100 < 60){
 						EventPhase  = 1;
 				 	}
+			break;
+
+			case 73:
+				EventPhase = 10;
+				document.getElementById('message').innerHTML = '<span class="message">道具を使用する</span>';
+
 			break;
 
 			case 83:
@@ -1480,8 +1526,6 @@ window.addEventListener("keyup",function(e){
 	}
  break;
 
-	 break;
-
 	 case 8://特技を選んだ時
 	  SkillCommand();
 	 	switch(e.keyCode){//戦闘コマンドが入力されたら
@@ -1554,9 +1598,49 @@ window.addEventListener("keyup",function(e){
 	
 	break;
 
+	 case 10://道具確認
+	 ItemAddRemover();
+		switch(e.keyCode){//iボタンが押されたら
 
-	 case 10://以下シナリオ関係
+      case 13://何をするか決定
+			document.getElementById('item_menu' + ItemCursor).className = 'menu menu-nonactive';
+			EventPhase = 11;
+
+			 
+      break; 
+
+			case 38://上矢印の処理
+				if (ItemCursor <= 1) {
+					ItemMenu(ItemBag.length);
+					document.getElementById('message').innerHTML = ItemBag[ItemCursor-1].describe;
+
+				} else {
+					ItemMenu(ItemCursor - 1);
+					document.getElementById('message').innerHTML = ItemBag[ItemCursor-1].describe;
+				}	
+			break;
+
+			case 40://下矢印の処理
+				if (ItemCursor > ItemBag.length - 1) {
+					ItemMenu(1);
+					document.getElementById('message').innerHTML = ItemBag[ItemCursor-1].describe;
+
+				} else {
+					ItemMenu(ItemCursor + 1);
+					document.getElementById('message').innerHTML = ItemBag[ItemCursor-1].describe;
+
+				}
+			break;
+
+			default:
+				ItemMenu(ItemBag.length[0]);
+			break;
+		}
 	 break;
+
+	 case 11:
+		 ItemManager(ItemCursor);
+		 break;
 
 	 default:
 		console.log(e.keyCode);
@@ -1570,16 +1654,33 @@ window.addEventListener("keyup",function(e){
 //save時の処理はここで データが増えたらフォームを増やす
 window.addEventListener('load', function(){
 
-	//EventListenerに変更された値を渡す readonly下でも更新可能
+	//EventListenerで変更された値を渡す textfieldがreadonlyでもこちらで更新可能
 	const btn = document.getElementById("mbtn");
 	const posx = document.getElementById("position_x");
 	const posy = document.getElementById("position_y");
+	const HP = document.getElementById("hp");
+	const MHP = document.getElementById("max_hp");
+	const MP = document.getElementById("mp");
+	const MMP = document.getElementById("max_mp");
+	const ATK = document.getElementById("atk");
+	const DEF = document.getElementById("def");
+	const SPD = document.getElementById("spd");
+	const LV = document.getElementById("lv");
+	const EXP = document.getElementById("exp");
 
-	
 	btn.addEventListener('click', function() {
 		posx.value = PlayerXPos;
 		posy.value = PlayerYPos;
-
+		HP.value = PlayerHp;
+		MHP.value = PlayerMaxHp;
+		MP.value = PlayerMp;
+		MMP.value = PlayerMaxMp;
+		ATK.value = PlayerAtk;
+		DEF.value = PlayerDef;
+		SPD.value = PlayerSpd;
+		LV.value = Lv;
+		EXP.value = Exp;
+ 
 	});
 
 });

@@ -15,6 +15,15 @@ ActiveRecord::Schema.define(version: 2021_03_15_054236) do
   create_table "players", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.integer "posx", null: false
     t.integer "posy", null: false
+    t.integer "playerhp", null: false
+    t.integer "playermaxhp", null: false
+    t.integer "playermp", null: false
+    t.integer "playermaxmp", null: false
+    t.integer "playeratk", null: false
+    t.integer "playerspd", null: false
+    t.integer "playerdef", null: false
+    t.integer "lv", null: false
+    t.integer "exp", null: false
     t.bigint "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
