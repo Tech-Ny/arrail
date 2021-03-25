@@ -73,7 +73,7 @@ window.onload = onLoad;
 //敵の画像をここに格納しておいてimgを変えるだけでいいようにしておく
 var Enemy = [];
 
-//ステータス表記
+//ステータス表記 セーブと値が被らないように気をつける
 function Status(){
 	let HP = document.getElementById("status_hp");
 	let MP = document.getElementById("status_mp");
