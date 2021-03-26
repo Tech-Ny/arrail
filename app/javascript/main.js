@@ -13,7 +13,7 @@ let EnemySpd = 10;
 let EnemyDef = 15;
 let Lv = gon.player.lv;
       
-//仮置きご自身のステータス そのうち内容をuserから取って来させるつもり 他のデータと同じようにgonで移動可能か?
+//仮置きご自身のステータス gonで移動
 //装備後のステータスは値をもらってから算出するように
 
 let PlayerMaxHp = gon.player.playermaxhp;
@@ -47,6 +47,22 @@ var BLeaf = {item_id: 10001,item_name:"アオイソウ",item_type : 4,describe:"
 var WLeaf = {item_id: 10002,item_name:"シラクサ",item_type : 4,describe:"白い草 とても綺麗<br>食べるとあらゆる苦痛を忘れる"};
 var Null = {item_id: 100000,item_name:" ",iem_type : 10, describe:"空きスペース"};
 
+var TestObject = [{hp:gon.player.playerhp,mp:gon.player.playermp}];
+//プレイヤーが持っていたアイテムを以下で取得 アイテムを保存する余白を作って後で呼び出す
+/*
+var HadItem_One = {item_id: gon.item_id,item_name:gon.item_name,item_type : gon.item_type,describe:gon.describe};
+var HadItem_Two = {item_id: gon.item_id,item_name:gon.item_name,item_type : gon.item_type,describe:gon.describe};
+var HadItem_Three = {item_id: gon.item_id,item_name:gon.item_name,item_type : gon.item_type,describe:gon.describe};
+var HadItem_Four = {item_id: gon.item_id,item_name:gon.item_name,item_type : gon.item_type,describe:gon.describe};
+var HadItem_Five = {item_id: gon.item_id,item_name:gon.item_name,item_type : gon.item_type,describe:gon.describe};
+var HadItem_Six = {item_id: gon.item_id,item_name:gon.item_name,item_type : gon.item_type,describe:gon.describe};
+var HadItem_Seven = {item_id: gon.item_id,item_name:gon.item_name,item_type : gon.item_type,describe:gon.describe};
+var HadItem_Eight = {item_id: gon.item_id,item_name:gon.item_name,item_type : gon.item_type,describe:gon.describe};
+var HadItem_Nine = {item_id: gon.item_id,item_name:gon.item_name,item_type : gon.item_type,describe:gon.describe};
+var HadItem_Ten = {item_id: gon.item_id,item_name:gon.item_name,item_type : gon.item_type,describe:gon.describe};
+*/
+
+
 //道具鞄配列
 var ItemBag = [Null,Null,Null,Null,Null,Null,Null,Null,Null,Null];
 
@@ -75,6 +91,8 @@ var Enemy = [];
 
 //ステータス表記 セーブと値が被らないように気をつける
 function Status(){
+	console.log(TestObject);
+	console.log(ItemBag);
 	let HP = document.getElementById("status_hp");
 	let MP = document.getElementById("status_mp");
 	let LV = document.getElementById("status_lv");
